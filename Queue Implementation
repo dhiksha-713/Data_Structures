@@ -1,0 +1,81 @@
+#include <stdio.h>
+
+# define max 3
+int queue_array[max];
+int front=-1;
+int rear=-1;
+void insert()
+{
+    int add_item; 
+    if(rear==(max-1))
+      printf("overflow");
+    else
+    {
+        if(front==-1)
+            front=0;
+        printf("Enter the element to be inserted");
+        scanf("%d",&add_item);
+        rear+=1;
+        queue_array[rear]=add_item;
+    }
+}
+
+void delete()
+{
+    if(front==-1 || front>rear)
+    {
+        printf("Queue is empty");
+
+    }
+    else
+    {
+        printf("%d", queue_array[front]);
+        front=front+1;
+    }
+    if(front==rear)
+    {
+        front=0;
+        rear=-1;
+    }
+
+}
+void display()
+{
+    if(front==-1)
+      printf("Queue is empty");
+    else
+    {
+        int i;
+        printf("Queue is:");
+        for(i=front; i<=rear; i++)
+           printf("%d\t", queue_array[i]);
+        printf("\n");
+
+    }
+
+}
+void main()
+{
+    int ch;
+    while(1)
+    {
+        printf("MENU\n");
+        printf("1. Insert\n 2. Delete\n 3. Display\n 4. Exit\n" );
+        printf("Enter your choice");
+        scanf("%d", &ch);
+        switch(ch)
+        {
+            case 1 : insert();
+                     break;
+            case 2 : delete();
+                     break;
+            case 3 : display();
+                     break;
+            case 4 : exit(1);
+
+            default : printf("Invalid choice");
+        }
+
+    }
+
+}
