@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+typedef struct node {
+int data;
+struct node *next;
+}Node;
+
+Node *top=NULL;
+
+Node *create_node()
+{
+    int info;
+    Node *newnode=(Node *) malloc(sizeof(Node));
+    printf("Enter data to be inserted");
+    scanf("%d",&newnode->data);
+    newnode->next=NULL;
+    return newnode;
+}
+void push()
+{
+    if(top==NULL)
+    {
+        Node *temp=create_node();
+        top=temp;
+    }    
+    else
+    {
+        Node *temp=create_node();
+        temp->next=top;
+        top=temp;
+    }
+}
+
+void pop()
+{
+    if(top==NULL)
+    { printf("UNDERFLOW"); }
+    else if(top->next==NULL)
+    { free(top); top=NULL; } 
+    else
+    {
+        Node *ptr=top;
+        top=top->next;
+        //printf("The deleted element is: %d",&ptr->data);
+        free(ptr);
+    }
+}
+
+void enqueue()
+{
+    if(top==NULL)
+    {
+        Node *temp=create_node();
+        top=temp;
+    }    
+    else
+    {
+        Node *temp=create_node(), *ptr=top;
+        while(ptr->next!=NULL)
+        {  ptr=ptr->next;  }
+        ptr->next=temp;
+    }
+}
+
+void display()
+{
+    Node *ptr=top;
+    while(ptr->next!=NULL)
+    {   printf("%d--->", ptr->data);
+        ptr=ptr->next;    
+    }
+    printf("%d\n\n", ptr->data);
+}
+int main()
+{
+    int ch,a;
+    while(1)
+    {
+    printf ("\nMENU\n1.STACK\t2.QUEUE\t3.Exit\n");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+        case 1: printf ("WELCOME TO THE IMPLEMENTATION OF STACK USING LINKED LIST!");
+                while(1){
+                printf("\nMENU\n1.PUSH\t2.POP\t3.DISPLAY\n4.Exit\n");
+                scanf("%d",&a);
+                switch(a)
+                {
+                    case 1: push(); break;
+                    case 2: pop(); break;
+                    case 3: display(); break;
+                    case 4: exit(0);
+                }}
+        case 2: printf ("WELCOME TO THE IMPLEMENTATION OF QUEUE USING LINKED LIST!");
+                while(1){
+                printf("\nMENU\n1.ENQUEUE\t2.DEQUEUE\t3.DISPLAY\n4.Exit\n");
+                scanf("%d",&a);
+                switch(a)
+                {
+                    case 1: enqueue(); break;
+                    case 2: pop(); break;
+                    case 3: display(); break;
+                    case 4: exit(0);
+                }}
+        case 3: exit(0);
+    }
+    }
+    return 0;
+}
