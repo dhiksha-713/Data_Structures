@@ -1,0 +1,219 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+typedef struct node
+{
+    int data;
+    struct node* link;
+}Node;
+
+Node* head=NULL;
+
+/*void insert_begin(int x)
+{
+    Node* temp;
+    temp = (Node*) malloc(sizeof(Node));
+    temp->data = x;
+    if(head==NULL)
+    {
+        head = temp;
+    }
+    else
+    {
+        temp->link = head;
+        head = temp;
+    }
+}*/
+
+int search(int x)
+{
+    int n=1,check=0;
+    Node* temp  = head;
+    while(temp->link!=NULL)
+    {
+        if(temp->data==x)
+        {
+           check=1;
+           break;
+        }
+        else
+        {temp = temp->link;
+         n++;
+         check=0;
+        }
+    }
+    return n;
+}
+
+void delete_beg()
+{
+   Node* temp = head;
+   head = temp->link;
+   free(temp);
+}
+
+void insert(int x){
+    Node* point = (Node*) malloc(sizeof(Node));
+    point -> data = x;
+    point -> link = NULL;
+    if(head!=NULL)
+    {
+        point -> link = head;
+    }
+    head = point;
+}
+
+void delete_end()
+{
+    Node* temp = head,*ptr;
+    while(temp->link!=NULL)
+    {
+        ptr = temp;
+        temp = temp->link;
+        //n = n-1;
+    }
+
+    ptr->link = NULL;
+    free(temp);
+
+    /*Node* temp1 = temp;
+    temp->link = temp1->link;
+    free(temp1);*/
+}
+
+
+void delete(int x)
+{
+    int n;
+    n = search(x);
+    Node* temp = head;
+    if(n==1)
+    {
+        head = temp->link;
+        free(temp);
+    }
+    else{
+    while(n-2!=0)
+    {
+        temp = temp->link;
+        n = n-1;
+    }
+    Node* temp1 = temp->link;
+    temp->link = temp1->link;
+    free(temp1);
+    }
+}
+
+void insert_n(int x,int n)
+{
+    Node* temp;
+    Node* temp1=head;
+    temp = (Node*) malloc(sizeof(Node));
+
+    if(n==1)
+    {
+        temp->data = x;
+        temp->link = head;
+        head = temp;
+    }
+    else
+    {
+        temp->data = x;
+        while(n-2!=0)
+        {
+            temp1 = temp1->link;
+            n--;
+        }
+        temp->link = temp1->link;
+        temp1->link = temp;
+    }
+
+}
+
+void insert_end(int x)
+{
+    Node* temp;
+    Node* temp1=head;
+    temp = (Node*) malloc(sizeof(Node));
+
+
+        temp->data = x;
+        while(temp1->link!=NULL)
+        {
+            temp1 = temp1->link;
+        }
+        temp->link = temp1->link;
+        temp1->link = temp;
+
+}
+
+
+
+void display()
+{
+    printf("LIST: ");
+    Node* temp = head;
+    while(temp != NULL )
+    {
+        printf("%d ",temp->data);
+        temp = temp->link;
+    }
+    printf("\n");
+}
+
+int main()
+{
+    int x,n,p=0,choice;
+    while(p==0)
+    {
+        printf("1.INSERT\n 2.DELETE FROM SPECIFIED LOCATION\n 3.DISPLAY\n 4.DELETE FROM BEGINING\n 5.DELETE FROM END\n 6.EXIT\n 7.INSERT FROM BEGINNING\n 8.INSERT FROM END\n");
+        scanf("%d",&choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("Enter data to be inserted:\n");
+                scanf("%d",&x);
+                printf("Enter position:\n");
+                scanf("%d",&n);
+                insert_n(x,n);
+                break;
+
+            case 2:
+                printf("Enter data to delete:\n");
+                scanf("%d",&n);
+                delete(n);
+                break;
+
+            case 3:
+                display();
+                break;
+
+            case 4:
+                delete_beg();
+                break;
+
+            case 5:
+                delete_end();
+                break;
+
+            case 6:
+                exit(1);
+
+            case 7:
+                printf("ENTER DATA TO BE INSERTED:\n");
+                scanf("%d",&x);
+                insert(x);
+                break;
+
+            case 8:
+                printf("ENTER DATA TO BE INSERTED:\n");
+                scanf("%d",&x);
+                insert_end(x);
+                break;
+
+        }
+    }
+
+    return 0;
+}
